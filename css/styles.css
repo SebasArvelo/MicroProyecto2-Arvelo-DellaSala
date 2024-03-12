@@ -1,5 +1,8 @@
 /* Estilos generales */
 body {
+  background-image: url('https://as1.ftcdn.net/v2/jpg/01/09/85/32/1000_F_109853265_Lrqg2qeqmOirG9Ja7fWP2jin9Y6eKoxV.jpg');
+    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+    background-position: center; /* Centra la imagen en el fondo */
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
