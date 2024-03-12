@@ -74,7 +74,9 @@ body {
   border-radius: 3px;
 }
 
-.form-group button {
+.form-group select {
   width: 100%;
   padding: 10px;
-  background-color: 
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
