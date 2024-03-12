@@ -1,44 +1,28 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import firebase from '../firebase/firebase';
+import React from 'react';
 
-const ClubList = () => {
-  const [clubs, setClubs] = useState([]);
-
-  // Función asíncrona para obtener la lista de clubes desde Firestore
-  const fetchClubs = async () => {
-    try {
-      const clubsCollection = firebase.firestore().collection('clubs');
-      const snapshot = await clubsCollection.get();
-      const clubList = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setClubs(clubList);
-    } catch (error) {
-      console.error('Error al obtener la lista de clubes:', error);
-    }
-  };
-
-  // Llamar a la función fetchClubs cuando el componente se monte
-  useState(() => {
-    fetchClubs();
-  }, []);
-
+const ClubList = ({ clubs }) => {
   return (
     <div>
       <h2>Lista de Clubes</h2>
-      <ul>
-        {clubs.map(club => (
-          <li key={club.id}>
-            <h3>{club.nombre}</h3>
-            <p>{club.descripcion}</p>
-            <Link to={`/clubs/${club.id}`}>Ver detalles</Link>
-          </li>
-        ))}
-      </ul>
+      {clubs.map((club) => (
+        <div key={club.ID}>
+          <h3>{club.nombre}</h3>
+          <p>{club.descripcion}</p>
+          <h4>Videojuegos:</h4>
+          <ul>
+            {club.videojuegos.map((videojuegoId) => (
+              <li key={videojuegoId}>
+                {/* Aquí deberías buscar el videojuego en tu base de datos y mostrar su título */}
+                Videojuego ID: {videojuegoId}
+              </li>
+            ))}
+          </ul>
+          <button>Unirse al Club</button>
+        </div>
+      ))}
     </div>
   );
 };
 
 export default ClubList;
+

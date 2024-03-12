@@ -2,60 +2,92 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import firebase from '../firebase/firebase';
 
-const ClubDetails = () => {
+const ClubDetails = ({ user }) => {
   const { clubId } = useParams();
   const [club, setClub] = useState(null);
-  const [isMember, setIsMember] = useState(false);
+  const [member, setMember] = useState(false);
 
   useEffect(() => {
-    // Función para obtener los detalles del club desde Firestore
     const fetchClubDetails = async () => {
-      try {
-        const clubRef = firebase.firestore().collection('clubs').doc(clubId);
-        const doc = await clubRef.get();
-        if (doc.exists) {
-          setClub(doc.data());
-        } else {
-          console.log('No existe el club con el ID proporcionado.');
-        }
-      } catch (error) {
-        console.error('Error al obtener los detalles del club:', error);
+      const clubRef = firebase.firestore().collection('clubes').doc(clubId);
+      const clubData = await clubRef.get();
+      if (clubData.exists) {
+        setClub({ id: clubData.id, ...clubData.data() });
+      } else {
+        console.log('Club not found');
       }
     };
 
     fetchClubDetails();
   }, [clubId]);
 
-  // Función para comprobar si el usuario es miembro del club
-  const checkMembership = () => {
-    // Aquí debes implementar la lógica para verificar si el usuario es miembro del club
-    // Puedes usar Firebase Auth para obtener el usuario actual y consultar la base de datos para ver si está registrado en el club
-    // Debes establecer el estado de isMember en consecuencia
-  };
+  useEffect(() => {
+    if (user) {
+      const membershipRef = firebase.firestore().collection('membresias')
+        .where('clubId', '==', clubId)
+        .where('userId', '==', user.uid);
 
-  // Función para unirse o salir del club
+      membershipRef.get().then((snapshot) => {
+        if (!snapshot.empty) {
+          setMember(true);
+        }
+      });
+    }
+  }, [clubId, user]);
+
   const handleMembership = () => {
-    // Aquí debes implementar la lógica para unirse o salir del club
-    // Puedes usar Firebase Auth para obtener el usuario actual y Firebase Firestore para actualizar la membresía del usuario en el club
+    if (member) {
+      // Remove membership
+      firebase.firestore().collection('membresias')
+        .where('clubId', '==', clubId)
+        .where('userId', '==', user.uid)
+        .get()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            doc.ref.delete();
+          });
+          setMember(false);
+        })
+        .catch((error) => {
+          console.error('Error removing membership: ', error);
+        });
+    } else {
+      // Add membership
+      firebase.firestore().collection('membresias').add({
+        clubId,
+        userId: user.uid,
+      })
+        .then(() => {
+          setMember(true);
+        })
+        .catch((error) => {
+          console.error('Error adding membership: ', error);
+        });
+    }
   };
-
-  if (!club) {
-    return <div>Cargando...</div>;
-  }
 
   return (
     <div>
-      <h2>{club.nombre}</h2>
-      <p>{club.descripcion}</p>
-      <h3>Videojuegos del Club:</h3>
-      <ul>
-        {club.videojuegos.map(videojuegoId => (
-          <li key={videojuegoId}>{/* Aquí debes mostrar los detalles de cada videojuego */}</li>
-        ))}
-      </ul>
-      <button onClick={handleMembership}>{isMember ? 'Salir del Club' : 'Unirse al Club'}</button>
+      {club && (
+        <div>
+          <h2>{club.nombre}</h2>
+          <p>{club.descripcion}</p>
+          <h3>Videojuegos</h3>
+          <ul>
+            {club.videojuegos.map((videojuegoId) => (
+              <li key={videojuegoId}>{/* Renderizar información del videojuego */}</li>
+            ))}
+          </ul>
+          {user && (
+            <button onClick={handleMembership}>
+              {member ? 'Retirarse del Club' : 'Unirse al Club'}
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
 export default ClubDetails;
+
