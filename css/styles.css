@@ -1,11 +1,11 @@
 /* Estilos generales */
 body {
-  background-image: url('https://as1.ftcdn.net/v2/jpg/01/09/85/32/1000_F_109853265_Lrqg2qeqmOirG9Ja7fWP2jin9Y6eKoxV.jpg');
-    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
-    background-position: center; /* Centra la imagen en el fondo */
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-image: url('https://as1.ftcdn.net/v2/jpg/01/09/85/32/1000_F_109853265_Lrqg2qeqmOirG9Ja7fWP2jin9Y6eKoxV.jpg');
+  background-size: cover;
+  background-position: center;
   background-color: #f8f8f8;
 }
 
@@ -77,122 +77,4 @@ body {
 .form-group button {
   width: 100%;
   padding: 10px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.form-group button:hover {
-  background-color: #555;
-}
-
-.root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #333;
-  color: white;
-  text-align: center;
-}
-
-.inforoot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: down;
-  width: 100%;
-  height: 100%;
-}
-
-.inforoot h1 {
-  font-size: 3rem;
-  margin-bottom: 0;
-}
-
-.inforoot p {
-  font-size: 1.5rem;
-  margin-top: 0;
-}
-
-/* Estilos para la tabla */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-fondo {
-  background-color: #00a2ff;
-}
-
-.background {
-  background-color: #68c8ff;
-}
-
-.menuenlaces {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f8f8f8;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-header {
-  background-color: #333;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-root {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  text-align: center;
-  padding: 20px;
-}
-
-footer {
-  background-color: #333;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-footer p {
-  margin: 0;
-}
-
-inforoot {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  text-align: center;
-  padding: 20px;
-}
+  background-color: 
